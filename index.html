@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>منصة التاريخ | نسخة تجريبية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F8; --surface:#FFFFFF; --ink:#10182B; --muted:#55607A; --line:#D5DAE5;
+  --lapis:#14285A; --lapis-2:#1C367A; --accent:#0F7C77; --accent-ink:#FFFFFF;
+  --gold:#E2B93B; --gold-text:#8A6A0A; --ok:#1B7F4B; --bad:#B3261E; --ok-bg:#E3F4EA; --bad-bg:#FBE7E5;
+  --font-head:"Reem Kufi","Noto Naskh Arabic",Tahoma,sans-serif;
+  --font-body:"Noto Naskh Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1226; --surface:#141C38; --ink:#EAEEF7; --muted:#9AA6C4; --line:#28335A;
+    --accent:#3CC4BC; --accent-ink:#06211F; --gold-text:#E2B93B;
+    --ok:#5FD08F; --bad:#FF8F86; --ok-bg:#12301F; --bad-bg:#3A1714;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1226; --surface:#141C38; --ink:#EAEEF7; --muted:#9AA6C4; --line:#28335A;
+  --accent:#3CC4BC; --accent-ink:#06211F; --gold-text:#E2B93B;
+  --ok:#5FD08F; --bad:#FF8F86; --ok-bg:#12301F; --bad-bg:#3A1714;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:18px;line-height:1.9}
+h1,h2,h3{font-family:var(--font-head);line-height:1.4;margin:0}
+a{color:inherit}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:var(--lapis);color:#fff;border-bottom:3px solid var(--gold)}
+header.top .wrap{display:flex;align-items:center;gap:16px;min-height:58px;flex-wrap:wrap}
+.brand{font-family:var(--font-head);font-weight:700;font-size:20px;text-decoration:none;display:flex;align-items:center;gap:10px}
+.beta{font-family:var(--font-body);font-size:13px;background:var(--gold);color:#241A00;padding:0 10px;border-radius:99px;line-height:22px;font-weight:700}
+nav{margin-inline-start:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav a{text-decoration:none;padding:4px 12px;border-radius:8px;font-size:16px;color:#DDE5FA}
+nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+/* hero + timeline */
+.hero{background:var(--lapis);color:#fff;padding:56px 0 40px}
+.hero h1{font-size:clamp(30px,6vw,52px);font-weight:700;max-width:16em}
+.hero p.lead{font-size:20px;max-width:34em;color:#CFDAF5;margin:16px 0 0}
+.hero .meta{margin-top:10px;color:var(--gold);font-size:17px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-block;border:0;border-radius:10px;padding:10px 22px;font-weight:700;text-decoration:none;background:var(--gold);color:#241A00;line-height:1.7}
+.btn:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4)}
+.btn.solid{background:var(--accent);color:var(--accent-ink)}
+.btn.line{background:transparent;color:var(--ink);border:2px solid var(--line)}
+
+.tl{margin-top:44px}
+.tl h2{font-size:22px;color:#fff;margin-bottom:6px}
+.tl small{color:#B5C3EA;font-size:15px}
+.track-wrap{position:relative;margin-top:14px;overflow-x:auto;padding:26px 6px 14px;scrollbar-color:var(--gold) transparent}
+.track{position:relative;display:flex;gap:0;min-width:max-content}
+.track::before{content:"";position:absolute;inset-inline:0;top:38px;height:4px;background:linear-gradient(90deg,#3CC4BC,#E2B93B);border-radius:4px;opacity:.85}
+.node{position:relative;background:none;border:0;color:#fff;width:112px;flex:0 0 auto;padding:0;text-align:center}
+.node .dot{display:block;width:26px;height:26px;margin:0 auto;border-radius:50%;background:var(--lapis);border:4px solid #7F93C9;position:relative;z-index:1;transition:transform .15s,border-color .15s,background .15s}
+.node .yr{display:block;margin-top:8px;font-family:var(--font-head);font-size:15px;color:#B5C3EA;line-height:1.4}
+.node .nm{display:block;font-size:14px;line-height:1.5;color:#B5C3EA;padding:0 4px}
+.node:hover .dot{border-color:var(--gold)}
+.node[aria-selected="true"] .dot{background:var(--gold);border-color:#fff;transform:scale(1.25)}
+.node[aria-selected="true"] .yr,.node[aria-selected="true"] .nm{color:#fff}
+.detail{margin-top:18px;background:var(--lapis-2);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:18px 22px;display:grid;gap:6px}
+.detail h3{font-size:24px;color:var(--gold)}
+.detail .when{font-size:15px;color:#B5C3EA}
+.detail p{margin:0;color:#EAF0FF}
+.detail .nav{display:flex;gap:8px;margin-top:8px}
+.detail .nav button{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:2px 14px}
+.detail .nav button:disabled{opacity:.35;cursor:default}
+
+/* sections */
+section.block{padding:56px 0}
+section.block h2{font-size:clamp(24px,4vw,32px);margin-bottom:6px}
+section.block .sub{color:var(--muted);margin:0 0 24px}
+.alt{background:var(--surface);border-block:1px solid var(--line)}
+
+/* lessons */
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:16px;color:var(--muted)}
+.bar{flex:1;height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+details.unit{background:var(--bg);border:1px solid var(--line);border-radius:12px;margin-bottom:12px}
+.alt details.unit{background:var(--bg)}
+details.unit summary{cursor:pointer;padding:12px 18px;font-family:var(--font-head);font-size:20px;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+details.unit summary::-webkit-details-marker{display:none}
+details.unit summary::after{content:"＋";color:var(--accent);font-family:var(--font-body)}
+details.unit[open] summary::after{content:"－"}
+details.unit summary .cnt{font-family:var(--font-body);font-size:15px;color:var(--muted);margin-inline-start:auto}
+.lessons{list-style:none;margin:0;padding:0 18px 12px}
+.lessons li{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px dashed var(--line);flex-wrap:wrap}
+.lessons .t{flex:1;min-width:180px}
+.lessons .d{font-size:15px;color:var(--muted)}
+.chip{border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:0 14px;font-size:15px;line-height:30px}
+.chip[aria-pressed="true"]{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.soon{font-size:14px;color:var(--gold-text);border:1px dashed var(--gold-text);border-radius:99px;padding:0 10px;line-height:26px}
+.play{font-size:15px;text-decoration:none;color:var(--accent-ink);background:var(--accent);border-radius:99px;padding:0 14px;line-height:30px;font-weight:700}
+
+/* quiz */
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;max-width:720px}
+.alt .quiz{background:var(--bg)}
+.q-top{display:flex;justify-content:space-between;color:var(--muted);font-size:15px;margin-bottom:8px}
+.q-text{font-family:var(--font-head);font-size:22px;margin-bottom:14px}
+.opts{display:grid;gap:10px}
+.opt{text-align:start;background:transparent;color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:8px 16px;line-height:1.7}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default;color:var(--ink)}
+.why{margin-top:14px;padding:10px 14px;border-radius:10px;background:var(--bg);border-inline-start:4px solid var(--accent);font-size:16px}
+.q-actions{margin-top:16px}
+.score{font-family:var(--font-head);font-size:44px;color:var(--accent)}
+
+/* schedule */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:17px}
+th,td{padding:10px 16px;text-align:start;border-bottom:1px solid var(--line)}
+th{font-family:var(--font-head);background:var(--bg);font-weight:500}
+tr:last-child td{border-bottom:0}
+
+/* contact */
+.contact{display:flex;gap:12px;flex-wrap:wrap}
+footer{padding:28px 0 40px;color:var(--muted);font-size:15px;border-top:1px solid var(--line)}
+.themebtn{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:0 10px;line-height:30px;font-size:15px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><span id="brandName">منصة التاريخ</span><span class="beta">نسخة تجريبية</span></a>
+    <nav aria-label="التنقل">
+      <a href="#timeline">الخط الزمني</a>
+      <a href="#lessons">الدروس</a>
+      <a href="#quiz">اختبر نفسك</a>
+      <a href="#schedule">المواعيد</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+    <button class="themebtn" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي">☾ / ☀</button>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="wrap">
+    <h1>التاريخ مش حفظ، ده حكاية أحداثها بتتربط ببعض</h1>
+    <p class="lead">شرح مبسّط، خطوط زمنية تفاعلية، واختبارات قصيرة تقيس مستواك بعد كل درس.</p>
+    <div class="meta" id="teacherLine">مع أ/ اسم المدرس · المرحلة الثانوية</div>
+    <div class="cta-row">
+      <a class="btn" href="#lessons">ابدأ أول درس</a>
+      <a class="btn ghost" href="#quiz">جرّب كويز سريع</a>
+    </div>
+
+    <div class="tl" id="timeline">
+      <h2>تاريخ مصر على خط واحد</h2>
+      <small>اضغط على أي حدث لتشوف التفاصيل</small>
+      <div class="track-wrap"><div class="track" id="track" role="tablist" aria-label="الأحداث التاريخية"></div></div>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+<section class="block" id="lessons">
+  <div class="wrap">
+    <h2>الدروس</h2>
+    <p class="sub">علّم على الدرس اللي خلصته وتقدّمك هيتحفظ على جهازك.</p>
+    <div class="progress"><span id="progText">0 من 0 دروس</span><div class="bar"><i id="progBar"></i></div></div>
+    <div id="units"></div>
+  </div>
+</section>
+
+<section class="block alt" id="quiz">
+  <div class="wrap">
+    <h2>اختبر نفسك</h2>
+    <p class="sub">ست أسئلة سريعة، والتصحيح فوري مع التوضيح.</p>
+    <div class="quiz" id="quizBox"></div>
+  </div>
+</section>
+
+<section class="block" id="schedule">
+  <div class="wrap">
+    <h2>مواعيد الحصص</h2>
+    <p class="sub">مواعيد تجريبية، هتتعدّل بمواعيد المدرس الفعلية.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>اليوم</th><th>الوقت</th><th>المجموعة</th><th>النوع</th></tr></thead>
+        <tbody id="schedBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="contact">
+  <div class="wrap">
+    <h2>تواصل معنا</h2>
+    <p class="sub">للحجز والاستفسار عن المجموعات.</p>
+    <div class="contact">
+      <a class="btn solid" id="waLink" href="#" target="_blank" rel="noopener">واتساب</a>
+      <a class="btn line" id="tgLink" href="#" target="_blank" rel="noopener">جروب تليجرام</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">نسخة تجريبية مصغّرة، المحتوى والمواعيد أمثلة قابلة للتعديل.</div></footer>
+
+<script>
+/* ====== إعدادات يتم تعديلها بسهولة ====== */
+var CONFIG = {
+  brand: "منصة التاريخ",
+  teacher: "اسم المدرس",
+  stage: "المرحلة الثانوية",
+  whatsapp: "201000000000",       // رقم واتساب بالصيغة الدولية بدون +
+  telegram: "https://t.me/"        // رابط جروب أو قناة تليجرام
+};
+
+var EVENTS = [
+  {y:"3100 ق.م", n:"توحيد القطرين", t:"توحيد القطرين", w:"بداية الدولة المصرية الموحدة", d:"يُنسب توحيد مصر العليا والسفلى تقليديًا إلى الملك نعرمر (مينا)، وبه بدأ عصر الأسرات."},
+  {y:"2560 ق.م", n:"الهرم الأكبر", t:"الهرم الأكبر", w:"نحو 2560 ق.م، الدولة القديمة", d:"بنى الملك خوفو الهرم الأكبر في الجيزة، وهو من أعظم إنجازات المصريين القدماء في الهندسة والإدارة."},
+  {y:"1457 ق.م", n:"معركة مجدو", t:"معركة مجدو", w:"نحو 1457 ق.م، الدولة الحديثة", d:"انتصر الملك تحتمس الثالث على تحالف الأمراء الكنعانيين، وبدأت مرحلة توسّع الإمبراطورية المصرية."},
+  {y:"639م", n:"الفتح الإسلامي", t:"الفتح الإسلامي لمصر", w:"639م إلى 642م", d:"دخل عمرو بن العاص مصر عام 639م، واكتمل الفتح بدخول الإسكندرية سنة 642م، وأُسست مدينة الفسطاط."},
+  {y:"1171م", n:"الدولة الأيوبية", t:"قيام الدولة الأيوبية", w:"1171م", d:"أنهى صلاح الدين الأيوبي حكم الفاطميين في مصر وأسس الدولة الأيوبية، وبدأ مرحلة مقاومة الصليبيين."},
+  {y:"1260م", n:"عين جالوت", t:"معركة عين جالوت", w:"1260م، عصر المماليك", d:"انتصر المماليك بقيادة قطز والظاهر بيبرس على المغول، وأوقفوا زحفهم نحو مصر والشام."},
+  {y:"1798م", n:"الحملة الفرنسية", t:"الحملة الفرنسية", w:"1798م إلى 1801م", d:"وصل نابليون بونابرت إلى الإسكندرية ومعه علماء، واكتُشف حجر رشيد عام 1799 وكان مفتاح فك رموز الهيروغليفية."},
+  {y:"1805م", n:"محمد علي", t:"تولّي محمد علي الحكم", w:"1805م", d:"اختار المصريون بزعامة العلماء محمد علي واليًا على مصر، وبدأ بناء الدولة الحديثة بالجيش والتعليم والزراعة."},
+  {y:"1869م", n:"قناة السويس", t:"افتتاح قناة السويس", w:"17 نوفمبر 1869", d:"افتُتحت قناة السويس للملاحة في عهد الخديوي إسماعيل، فغيّرت خريطة التجارة العالمية."},
+  {y:"1919م", n:"ثورة 1919", t:"ثورة 1919", w:"1919م", d:"اندلعت الثورة بعد نفي سعد زغلول ورفاقه، وشارك فيها المصريون من مختلف الفئات مطالبين بالاستقلال."},
+  {y:"1952م", n:"ثورة يوليو", t:"ثورة 23 يوليو", w:"23 يوليو 1952", d:"قام الضباط الأحرار بحركة أنهت الملكية، وأُعلنت الجمهورية بعدها عام 1953."},
+  {y:"1973م", n:"حرب أكتوبر", t:"حرب أكتوبر", w:"6 أكتوبر 1973", d:"عبر الجيش المصري قناة السويس وحطّم خط بارليف، ومهّد ذلك للمسار السياسي الذي أعاد سيناء."}
+];
+
+var UNITS = [
+  {t:"الوحدة الأولى: مصر القديمة", l:[
+    {id:"u1l1", t:"توحيد القطرين وبداية الأسرات", d:"20 دقيقة", url:""},
+    {id:"u1l2", t:"الدولة القديمة وعصر بناة الأهرام", d:"25 دقيقة", url:""},
+    {id:"u1l3", t:"الدولة الحديثة والإمبراطورية", d:"30 دقيقة", url:""}
+  ]},
+  {t:"الوحدة الثانية: مصر في العصور الوسطى", l:[
+    {id:"u2l1", t:"الفتح الإسلامي لمصر", d:"25 دقيقة", url:""},
+    {id:"u2l2", t:"الدولة الأيوبية وصلاح الدين", d:"25 دقيقة", url:""},
+    {id:"u2l3", t:"المماليك ومعركة عين جالوت", d:"30 دقيقة", url:""}
+  ]},
+  {t:"الوحدة الثالثة: مصر الحديثة", l:[
+    {id:"u3l1", t:"الحملة الفرنسية وأثرها", d:"25 دقيقة", url:""},
+    {id:"u3l2", t:"محمد علي وبناء الدولة الحديثة", d:"30 دقيقة", url:""},
+    {id:"u3l3", t:"ثورة 1919 والحركة الوطنية", d:"30 دقيقة", url:""},
+    {id:"u3l4", t:"ثورة يوليو وحرب أكتوبر", d:"35 دقيقة", url:""}
+  ]}
+];
+
+var QUIZ = [
+  {q:"من الملك الذي يُنسب إليه توحيد مصر العليا والسفلى؟", o:["خوفو","نعرمر (مينا)","تحتمس الثالث","رمسيس الثاني"], a:1, e:"يُنسب التوحيد تقريبًا سنة 3100 ق.م إلى الملك نعرمر (مينا)."},
+  {q:"في أي معركة انتصر المماليك على المغول سنة 1260م؟", o:["حطين","عين جالوت","المنصورة","مجدو"], a:1, e:"عين جالوت بقيادة قطز والظاهر بيبرس."},
+  {q:"في أي عام بدأت الحملة الفرنسية على مصر؟", o:["1789م","1798م","1805م","1869م"], a:1, e:"وصل نابليون إلى الإسكندرية سنة 1798م."},
+  {q:"من مؤسس الدولة الأيوبية في مصر؟", o:["قطز","محمد علي","صلاح الدين","عمرو بن العاص"], a:2, e:"أسسها صلاح الدين الأيوبي سنة 1171م بعد إنهاء حكم الفاطميين."},
+  {q:"في أي عام افتُتحت قناة السويس للملاحة؟", o:["1859م","1869م","1919م","1956م"], a:1, e:"افتُتحت في 17 نوفمبر 1869م في عهد الخديوي إسماعيل."},
+  {q:"من قاد ثورة 1919 المصرية؟", o:["مصطفى كامل","أحمد عرابي","سعد زغلول","جمال عبد الناصر"], a:2, e:"قادها سعد زغلول ورفاقه ضمن الوفد المصري."}
+];
+
+var SCHEDULE = [
+  ["السبت","5:00 م","الثالث الثانوي، مجموعة أ","سنتر"],
+  ["الأحد","7:00 م","الثالث الثانوي، مجموعة ب","أونلاين"],
+  ["الثلاثاء","6:00 م","الثاني الثانوي","أونلاين"],
+  ["الخميس","4:00 م","مراجعة عامة","أونلاين"]
+];
+
+/* ====== تخزين خفيف على جهاز الطالب ====== */
+function load(k, fb){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; }catch(e){ return fb; } }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+/* ====== هيدر ومحتوى ثابت ====== */
+document.getElementById("brandName").textContent = CONFIG.brand;
+document.getElementById("teacherLine").textContent = "مع أ/ " + CONFIG.teacher + " · " + CONFIG.stage;
+document.getElementById("waLink").href = "https://wa.me/" + CONFIG.whatsapp;
+document.getElementById("tgLink").href = CONFIG.telegram;
+document.getElementById("schedBody").innerHTML = SCHEDULE.map(function(r){
+  return "<tr>" + r.map(function(c){ return "<td>" + c + "</td>"; }).join("") + "</tr>";
+}).join("");
+
+/* ====== الوضع الليلي ====== */
+(function(){
+  var root = document.documentElement;
+  var saved = load("theme", null);
+  if(saved) root.setAttribute("data-theme", saved);
+  document.getElementById("themeBtn").addEventListener("click", function(){
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next); save("theme", next);
+  });
+})();
+
+/* ====== الخط الزمني ====== */
+(function(){
+  var track = document.getElementById("track"), detail = document.getElementById("detail");
+  var cur = 0;
+  track.innerHTML = EVENTS.map(function(e,i){
+    return '<button type="button" class="node" role="tab" data-i="'+i+'" aria-selected="false">' +
+      '<span class="dot"></span><span class="yr">'+e.y+'</span><span class="nm">'+e.n+'</span></button>';
+  }).join("");
+  function show(i, scroll){
+    cur = i; var e = EVENTS[i];
+    Array.prototype.forEach.call(track.children, function(n, k){ n.setAttribute("aria-selected", k===i ? "true" : "false"); });
+    detail.innerHTML = '<div class="when">'+e.w+'</div><h3>'+e.t+'</h3><p>'+e.d+'</p>' +
+      '<div class="nav"><button type="button" id="prevEv"'+(i===0?' disabled':'')+'>الحدث السابق</button>' +
+      '<button type="button" id="nextEv"'+(i===EVENTS.length-1?' disabled':'')+'>الحدث التالي</button></div>';
+    document.getElementById("prevEv").onclick = function(){ show(cur-1, true); };
+    document.getElementById("nextEv").onclick = function(){ show(cur+1, true); };
+    if(scroll){ track.children[i].scrollIntoView({behavior:"smooth", inline:"center", block:"nearest"}); }
+  }
+  track.addEventListener("click", function(ev){
+    var b = ev.target.closest(".node"); if(b) show(parseInt(b.getAttribute("data-i"),10), false);
+  });
+  show(0, false);
+})();
+
+/* ====== الدروس ====== */
+(function(){
+  var done = load("done", {});
+  var wrap = document.getElementById("units");
+  var total = 0; UNITS.forEach(function(u){ total += u.l.length; });
+  function progress(){
+    var n = Object.keys(done).filter(function(k){ return done[k]; }).length;
+    document.getElementById("progText").textContent = n + " من " + total + " دروس";
+    document.getElementById("progBar").style.width = (total ? n/total*100 : 0) + "%";
+  }
+  wrap.innerHTML = UNITS.map(function(u, ui){
+    return '<details class="unit"'+(ui===0?' open':'')+'><summary>'+u.t+'<span class="cnt">'+u.l.length+' دروس</span></summary><ul class="lessons">' +
+      u.l.map(function(l){
+        var act = l.url ? '<a class="play" href="'+l.url+'" target="_blank" rel="noopener">شاهد الفيديو</a>' : '<span class="soon">الفيديو قريبًا</span>';
+        return '<li><span class="t">'+l.t+'<br><span class="d">'+l.d+'</span></span>'+act+
+          '<button type="button" class="chip" data-id="'+l.id+'" aria-pressed="'+(done[l.id]?'true':'false')+'">'+(done[l.id]?'تم ✓':'علّم كمكتمل')+'</button></li>';
+      }).join("") + '</ul></details>';
+  }).join("");
+  wrap.addEventListener("click", function(ev){
+    var b = ev.target.closest(".chip"); if(!b) return;
+    var id = b.getAttribute("data-id");
+    done[id] = !done[id]; save("done", done);
+    b.setAttribute("aria-pressed", done[id] ? "true" : "false");
+    b.textContent = done[id] ? "تم ✓" : "علّم كمكتمل";
+    progress();
+  });
+  progress();
+})();
+
+/* ====== الكويز ====== */
+(function(){
+  var box = document.getElementById("quizBox");
+  var i = 0, score = 0, answered = false;
+  var best = load("bestScore", null);
+  function render(){
+    if(i >= QUIZ.length){
+      if(best === null || score > best){ best = score; save("bestScore", best); }
+      box.innerHTML = '<div class="q-top"><span>النتيجة</span></div><div class="score">'+score+' / '+QUIZ.length+'</div>' +
+        '<p>' + (score === QUIZ.length ? "ممتاز، إجابات كاملة." : score >= QUIZ.length/2 ? "مستوى كويس، راجع الأسئلة اللي غلطت فيها." : "محتاج مراجعة، ارجع للدروس وجرّب تاني.") + '</p>' +
+        '<p class="d" style="color:var(--muted);font-size:16px">أفضل نتيجة ليك: ' + best + ' / ' + QUIZ.length + '</p>' +
+        '<div class="q-actions"><button type="button" class="btn solid" id="again">أعد الكويز</button></div>';
+      document.getElementById("again").onclick = function(){ i = 0; score = 0; render(); };
+      return;
+    }
+    var q = QUIZ[i]; answered = false;
+    box.innerHTML = '<div class="q-top"><span>السؤال '+(i+1)+' من '+QUIZ.length+'</span><span>النتيجة الحالية: '+score+'</span></div>' +
+      '<div class="q-text">'+q.q+'</div><div class="opts">' +
+      q.o.map(function(o,k){ return '<button type="button" class="opt" data-k="'+k+'">'+o+'</button>'; }).join("") +
+      '</div><div id="fb" aria-live="polite"></div><div class="q-actions" id="nx"></div>';
+    box.querySelector(".opts").onclick = function(ev){
+      var b = ev.target.closest(".opt"); if(!b || answered) return;
+      answered = true;
+      var k = parseInt(b.getAttribute("data-k"),10);
+      Array.prototype.forEach.call(box.querySelectorAll(".opt"), function(x, idx){
+        x.disabled = true;
+        if(idx === q.a) x.classList.add("right");
+        else if(idx === k) x.classList.add("wrong");
+      });
+      if(k === q.a) score++;
+      document.getElementById("fb").innerHTML = '<div class="why"><b>' + (k === q.a ? "إجابة صحيحة. " : "إجابة غير صحيحة. ") + '</b>' + q.e + '</div>';
+      document.getElementById("nx").innerHTML = '<button type="button" class="btn solid" id="next">' + (i === QUIZ.length-1 ? "شوف النتيجة" : "السؤال التالي") + '</button>';
+      document.getElementById("next").onclick = function(){ i++; render(); };
+    };
+  }
+  render();
+})();
+</script>
+</body>
+</html>
