@@ -11,7 +11,7 @@ import { renderTeacher } from './views/teacher.js';
 import { renderChecklist } from './views/checklist.js';
 import { renderNotFound } from './views/notfound.js';
 
-const FONT_CSS = 'https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&display=swap';
+const FONT_CSS = 'https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@700&display=swap';
 const routes = [
   { path: '/', view: renderHome, nav: 'home' },
   { path: '/c/:id', view: renderCourse, nav: 'home' },

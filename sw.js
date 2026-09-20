@@ -1,6 +1,6 @@
 // Service worker: app shell = cache-first (versioned), /data/ = network-first (teacher edits show up), offline fallback.
 // To ship an update: bump VERSION. Users get a "حدّث دلوقتي" banner instead of a stale app.
-const VERSION = 'basata-v1.0.0';
+const VERSION = 'basata-v1.0.1';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'css/app.css',
   'js/main.js', 'js/router.js', 'js/ui.js', 'js/lib/normalize.js',

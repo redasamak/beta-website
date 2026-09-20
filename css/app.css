@@ -2,7 +2,8 @@
 :root{
   --paper:#F5F1E6; --card:#FFFDF7; --ink:#14203B; --ink-soft:#4B5675; --rule:#C8D5EA; --rule-soft:#E3EAF5;
   --margin:#C93A32; --accent:#1B47A8; --hl:#FFE27A; --ok:#176B3E; --bad:#B3261E; --line:#D9D2C0; --note:#FFF3B8; --note-ink:#4A3B00;
-  --f-head:"Aref Ruqaa","Noto Naskh Arabic","Segoe UI",Tahoma,serif;
+  --f-title:"Aref Ruqaa","Noto Naskh Arabic","Segoe UI",Tahoma,serif;               /* handwriting: page titles + stamp only */
+  --f-head:"Reem Kufi","Noto Kufi Arabic","Segoe UI",Tahoma,sans-serif;              /* Kufi: section headings, questions, dates */
   --f-body:"Noto Sans Arabic","Segoe UI","SF Arabic",system-ui,Tahoma,Arial,sans-serif;
   --r:14px; --nav-h:64px;
   color-scheme:light;
@@ -23,7 +24,7 @@
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.85;min-height:100vh}
 h1,h2,h3{font-family:var(--f-head);font-weight:700;line-height:1.55;margin:0 0 .4em}
-h1{font-size:clamp(28px,6vw,42px)} h2{font-size:clamp(21px,4vw,26px)}
+h1{font-family:var(--f-title);font-size:clamp(28px,6vw,42px)} h2{font-size:clamp(19px,3.6vw,23px)}
 p{margin:0 0 .8em} a{color:var(--accent)} ol,ul{margin:0;padding:0}
 img,svg{max-width:100%}
 .muted{color:var(--ink-soft)} .small{font-size:.88rem} .strong{font-weight:500} .grow{flex:1;min-width:0}
@@ -35,7 +36,7 @@ main:focus{outline:none}
 
 /* header + nav */
 .top{display:flex;align-items:center;gap:16px;min-height:var(--nav-h);padding:0 max(16px,calc((100% - 860px)/2 + 16px));background:var(--card);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:20}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-head);font-weight:700;font-size:22px;color:var(--ink);text-decoration:none}
+.brand{display:flex;align-items:center;gap:10px;min-height:44px;font-family:var(--f-head);font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}
 .logo{width:22px;height:27px;border:2px solid var(--ink);border-radius:3px;position:relative;background:var(--card)}
 .logo::before{content:"";position:absolute;inset-block:0;inset-inline-start:5px;width:2px;background:var(--margin)}
 .nav{display:flex;gap:4px;margin-inline-start:auto}
@@ -79,7 +80,7 @@ h1.draw::after{content:"";position:absolute;inset-inline:-.1em;bottom:.12em;heig
 
 /* badges, stamp, ring */
 .badge{display:inline-block;background:var(--note);color:var(--note-ink);border:1px dashed var(--note-ink);border-radius:8px;padding:0 10px;font-size:.85rem;font-weight:500;margin-inline-end:6px}
-.stamp{display:inline-block;color:var(--margin);border:3px double var(--margin);border-radius:10px;padding:0 14px;font:700 1.15rem var(--f-head);transform:rotate(-7deg);letter-spacing:.02em}
+.stamp{display:inline-block;color:var(--margin);border:3px double var(--margin);border-radius:10px;padding:0 14px;font:700 1.15rem var(--f-title);transform:rotate(-7deg);letter-spacing:.02em}
 .ring{flex:none;width:44px;height:44px} .ring-bg{stroke:var(--rule)} .ring-fg{stroke:var(--margin)}
 
 /* course + lessons */
@@ -94,7 +95,7 @@ h1.draw::after{content:"";position:absolute;inset-inline:-.1em;bottom:.12em;heig
 .empty{text-align:center;padding:34px 20px} .empty .btn{margin-top:8px}
 
 /* lesson content */
-.hook{font:700 1.25rem var(--f-head);background:var(--hl);color:var(--ink);padding:10px 16px;border-radius:10px;margin:0}
+.hook{font:700 1.1rem var(--f-head);background:var(--hl);color:var(--ink);padding:10px 16px;border-radius:10px;margin:0}
 .blk{margin-top:10px}
 .ticks{list-style:none;display:grid;gap:6px} .ticks li{padding-inline-start:30px;position:relative}
 .ticks li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--ok);font-weight:700}
@@ -116,7 +117,7 @@ h1.draw::after{content:"";position:absolute;inset-inline:-.1em;bottom:.12em;heig
 
 /* quiz */
 .quiz h2{margin:0}.q-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-.q{font:700 1.25rem var(--f-head);margin:8px 0 12px}
+.q{font:700 1.12rem var(--f-head);margin:8px 0 12px}
 .opts{display:grid;gap:10px}
 .opt{text-align:start;min-height:52px;padding:8px 16px;border:2px solid var(--ink);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
 .opt:hover:not(:disabled){background:var(--rule-soft)}
