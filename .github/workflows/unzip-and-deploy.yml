@@ -1,0 +1,62 @@
+name: unzip-and-deploy
+
+on:
+  push:
+    branches: [main]
+    paths: ['*.zip', '.github/workflows/unzip-and-deploy.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unpack any .zip at the repo root
+        run: |
+          shopt -s nullglob
+          zips=(*.zip)
+          if [ ${#zips[@]} -eq 0 ]; then echo "No zip found: deploying files already in the repo."; exit 0; fi
+          for z in "${zips[@]}"; do
+            echo "Unpacking $z"
+            tmp="$(mktemp -d)"
+            unzip -q -o "$z" -x '__MACOSX/*' '*/.DS_Store' '.github/*' '*/.github/*' -d "$tmp"
+            entries=("$tmp"/*)
+            if [ ${#entries[@]} -eq 1 ] && [ -d "${entries[0]}" ]; then src="${entries[0]}"; else src="$tmp"; fi
+            cp -a "$src"/. .
+            git rm -q -f "$z"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -q -m "Unpack site from zip"
+            git push
+          fi
+
+      - name: Assemble the site folder
+        run: |
+          mkdir _site
+          tar --exclude='./.git' --exclude='./.github' --exclude='./_site' --exclude='./tests' --exclude='./tools' \
+              --exclude='./node_modules' --exclude='./package*.json' --exclude='./*.zip' --exclude='./*.md' -cf - . | tar -xf - -C _site
+          if [ ! -f _site/index.html ]; then echo "::error::index.html not found. Make sure the zip contains the site files."; exit 1; fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
