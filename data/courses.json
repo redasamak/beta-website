@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "courses": [
+    {
+      "id": "a",
+      "title": "مصر الحضارة",
+      "titleEn": "Egypt: The Civilization",
+      "stage": "أولى ثانوي عام",
+      "description": "رحلة من نشأة الحضارة إلى مصر القديمة، ثم العراق وفينيقيا واليونان والرومان.",
+      "terms": [
+        {
+          "id": "a-t1",
+          "title": "الترم الأول",
+          "status": "active",
+          "units": [
+            {
+              "id": "a-t1-u1",
+              "title": "مدخل لدراسة حضارة مصر والعالم القديم",
+              "titleEn": "Introduction to studying the civilization of Egypt and the ancient world",
+              "lessons": [
+                {
+                  "id": "a-t1-u1-l1",
+                  "title": "الحضارة والتاريخ",
+                  "titleEn": "Civilization and History",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t1-u1-l2",
+                  "title": "مصادر دراسة الحضارات",
+                  "titleEn": "Sources for studying civilizations",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t1-u1-l3",
+                  "title": "عوامل قيام الحضارات",
+                  "titleEn": "Factors behind the rise of civilizations",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                }
+              ]
+            },
+            {
+              "id": "a-t1-u2",
+              "title": "حضارة مصر القديمة (الفرعونية)",
+              "titleEn": "Ancient Egyptian civilization",
+              "lessons": [
+                {
+                  "id": "a-t1-u2-l1",
+                  "title": "ملامح من تاريخ مصر القديمة",
+                  "titleEn": "Highlights of ancient Egyptian history",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t1-u2-l2",
+                  "title": "الحياة الاقتصادية",
+                  "titleEn": "Economic life",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t1-u2-l3",
+                  "title": "الحياة السياسية والإدارية",
+                  "titleEn": "Political and administrative life",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t1-u2-l4",
+                  "title": "الحياة الاجتماعية",
+                  "titleEn": "Social life",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t1-u2-l5",
+                  "title": "الحياة الدينية",
+                  "titleEn": "Religious life",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t1-u2-l6",
+                  "title": "الحياة الثقافية والفكرية",
+                  "titleEn": "Cultural and intellectual life",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a-t2",
+          "title": "الترم الثاني",
+          "status": "active",
+          "units": [
+            {
+              "id": "a-t2-u3",
+              "title": "حضارة بلاد العراق القديم وحضارة فينيقيا",
+              "titleEn": "Ancient Mesopotamia and Phoenicia",
+              "lessons": [
+                {
+                  "id": "a-t2-u3-l1",
+                  "title": "حضارة بلاد العراق القديم",
+                  "titleEn": "Ancient Mesopotamian civilization",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t2-u3-l2",
+                  "title": "حضارة فينيقيا",
+                  "titleEn": "Phoenician civilization",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                }
+              ]
+            },
+            {
+              "id": "a-t2-u4",
+              "title": "حضارة اليونان وحضارة الرومان",
+              "titleEn": "Greek and Roman civilizations",
+              "lessons": [
+                {
+                  "id": "a-t2-u4-l1",
+                  "title": "الحضارة اليونانية",
+                  "titleEn": "الإغريقية) (Greek civilization",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t2-u4-l2",
+                  "title": "مصر تحت حكم البطالمة",
+                  "titleEn": "Egypt under the Ptolemies",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t2-u4-l3",
+                  "title": "الحضارة الرومانية",
+                  "titleEn": "Roman civilization",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "a-t2-u4-l4",
+                  "title": "مصر تحت حكم الرومان",
+                  "titleEn": "Egypt under Roman rule",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "title": "التاريخ الوطني",
+      "titleEn": "National History",
+      "stage": "تانية ثانوي بكالوريا",
+      "description": "بناء الدولة المصرية وتحولاتها الكبرى، وقضايا التحرر الوطني.",
+      "terms": [
+        {
+          "id": "b-t1",
+          "title": "الترم الأول",
+          "status": "active",
+          "units": [
+            {
+              "id": "b-t1-u1",
+              "title": "مصر بين الماضي والحاضر",
+              "titleEn": "Egypt between past and present",
+              "lessons": [
+                {
+                  "id": "b-t1-u1-l1",
+                  "title": "بناء الدولة المصرية",
+                  "titleEn": "Building the Egyptian state",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u1-l2",
+                  "title": "الدولة المصرية القديمة ومقاومة الاحتلال",
+                  "titleEn": "The ancient Egyptian state and resisting occupation",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u1-l3",
+                  "title": "التحولات الكبرى في مصر: العصر الوسيط",
+                  "titleEn": "Major transformations in Egypt: medieval era",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u1-l4",
+                  "title": "التحولات الكبرى في مصر: العصر الحديث",
+                  "titleEn": "Major transformations in Egypt: modern era",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                }
+              ]
+            },
+            {
+              "id": "b-t1-u2",
+              "title": "تحولات القوة وبناء الوعي بمصر في العصر الحديث والمعاصر",
+              "titleEn": "Shifts of power and building awareness in modern and contemporary Egypt",
+              "lessons": [
+                {
+                  "id": "b-t1-u2-l1",
+                  "title": "سياسات الاحتلال بمصر في العصر الحديث",
+                  "titleEn": "Occupation policies in Egypt in the modern era",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u2-l2",
+                  "title": "صمود الشعب المصري ومقاومة الاحتلال",
+                  "titleEn": "Egyptian resilience and resistance to occupation",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u2-l3",
+                  "title": "ثورة 23 يوليو والتحولات الكبرى في مصر",
+                  "titleEn": "The 23 July Revolution and Egypt's major transformations",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u2-l4",
+                  "title": "الهوية الوطنية في مواجهة الاستعمار الجديد",
+                  "titleEn": "National identity versus neo-colonialism",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                }
+              ]
+            },
+            {
+              "id": "b-t1-u3",
+              "title": "مصر وقضايا التحرر في الوطن العربي وأفريقيا",
+              "titleEn": "Egypt and liberation causes in the Arab world and Africa",
+              "lessons": [
+                {
+                  "id": "b-t1-u3-l1",
+                  "title": "حركات التحرر ضد الاحتلال الفرنسي والإيطالي في العالم العربي",
+                  "titleEn": "Liberation movements against French and Italian occupation in the Arab world",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u3-l2",
+                  "title": "حركات التحرر ضد الاحتلال البريطاني والإسباني",
+                  "titleEn": "Liberation movements against British and Spanish occupation",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u3-l3",
+                  "title": "مرتكزات الدور المصري إقليميًا ودوليًا",
+                  "titleEn": "Foundations of Egypt's regional and international role",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                },
+                {
+                  "id": "b-t1-u3-l4",
+                  "title": "دور مصر في دعم حركات التحرر الوطني",
+                  "titleEn": "Egypt's role in supporting national liberation movements",
+                  "status": "titles_verified_needs_teacher_confirmation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b-t2",
+          "title": "الترم الثاني",
+          "status": "coming_soon",
+          "units": []
+        }
+      ]
+    }
+  ]
+}

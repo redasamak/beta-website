@@ -1,0 +1,14 @@
+{
+  "name": "basata-platform",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/unit/*.test.js",
+    "build:preview": "node tools/build-preview.mjs",
+    "test:e2e": "npx playwright test"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.1.0"
+  }
+}
