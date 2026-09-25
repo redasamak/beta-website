@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 """Real-browser end-to-end checks (Chromium via Playwright). Run: python3 tests/e2e/run_e2e.py
-Serves the site from this repo at BOTH / and /beta-website/ (GitHub Pages sub-path), then exercises it.
+Serves the site from this repo at BOTH / and /basata/ (GitHub Pages sub-path), then exercises it.
 Requires: pip install playwright && playwright install chromium"""
 import http.server, threading, functools, os, sys, re, json, time
 from playwright.sync_api import sync_playwright
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-SUB = '/beta-website'
+SUB = '/basata'
 
+OVERRIDE = {}  # path -> body: lets a test "deploy" a changed file on the server
 class Handler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        key = self.path.split('?')[0]
+        key = key[len(SUB):] if key.startswith(SUB + '/') else key
+        if key in OVERRIDE:
+            body = OVERRIDE[key].encode('utf-8')
+            self.send_response(200); self.send_header('Content-Type', 'text/css'); self.send_header('Content-Length', str(len(body))); self.end_headers(); self.wfile.write(body); return
+        return super().do_GET()
     def translate_path(self, path):
         if path.startswith(SUB + '/') or path == SUB: path = path[len(SUB):] or '/'
         return super().translate_path(path)
@@ -51,10 +59,10 @@ with sync_playwright() as p:
         pg = ctx.new_page(); errs = []; watch(pg, errs)
         bad_scroll = []; empty = []
         for r in routes:
-            pg.goto(f'{BASE}{SUB}/index.html{r}'); pg.wait_for_selector('main .view', timeout=5000); pg.wait_for_timeout(120)
+            pg.goto(f'{BASE}{SUB}/index.html{r}'); pg.wait_for_selector('main .view', timeout=5000); pg.wait_for_timeout(250)
             if pg.evaluate('document.documentElement.scrollWidth > window.innerWidth + 1'): bad_scroll.append(r)
             if len(pg.inner_text('main').strip()) < 20: empty.append(r)
-        check(f'{w}px: all {len(routes)} routes render (sub-path /beta-website/)', not empty, str(empty))
+        check(f'{w}px: all {len(routes)} routes render (sub-path /basata/)', not empty, str(empty))
         check(f'{w}px: no horizontal scrolling on any route', not bad_scroll, str(bad_scroll))
         check(f'{w}px: zero console errors/warnings/page errors', not errs, str(errs[:3]))
         check(f'{w}px: page is RTL Arabic', pg.evaluate('document.documentElement.dir') == 'rtl' and pg.evaluate('document.documentElement.lang') == 'ar')
@@ -141,7 +149,7 @@ with sync_playwright() as p:
     pg.evaluate('navigator.serviceWorker.ready'); pg.wait_for_timeout(600)
     ctrl = pg.evaluate('!!navigator.serviceWorker.controller')
     if not ctrl: pg.reload(); pg.wait_for_selector('.quiz'); pg.wait_for_timeout(300)
-    check('service worker is active under the /beta-website/ sub-path', pg.evaluate('!!navigator.serviceWorker.controller'))
+    check('service worker is active under the /basata/ sub-path', pg.evaluate('!!navigator.serviceWorker.controller'))
     ctx.set_offline(True)
     pg.goto(f'{BASE}{SUB}/index.html'); pg.wait_for_selector('.course-card', timeout=5000)
     check('OFFLINE: app shell + curriculum load from cache', pg.locator('.course-card').count() == 2)
@@ -150,6 +158,15 @@ with sync_playwright() as p:
     pg.goto(f'{BASE}{SUB}/index.html#/l/b-t1-u1-l1'); pg.wait_for_selector('main .view', timeout=5000)
     check('OFFLINE: a never-visited lesson degrades gracefully (friendly message, no crash)', 'لسه بيتجهّز' in pg.inner_text('main') or pg.locator('.quiz').count() == 1)
     ctx.set_offline(False); ctx.close()
+
+    # ---------- 7b. a new deploy reaches returning visitors on the next reload (no stale cache-first trap) ----------
+    ctx = browser.new_context(viewport={'width': 375, 'height': 812}); pg = ctx.new_page()
+    pg.goto(f'{BASE}{SUB}/index.html'); pg.wait_for_selector('.course-card'); pg.evaluate('navigator.serviceWorker.ready'); pg.reload(); pg.wait_for_selector('.course-card'); pg.close()
+    orig = open(os.path.join(ROOT, 'css', 'app.css'), encoding='utf-8').read()
+    OVERRIDE['/css/app.css'] = orig + '\nbody{background:rgb(1,2,3)!important}'   # "deploy" a changed file
+    pg = ctx.new_page(); pg.goto(f'{BASE}{SUB}/index.html'); pg.wait_for_selector('.course-card')   # visitor opens the site again (new tab)
+    check('NEW DEPLOY: a returning visitor (service worker active) sees the updated CSS when they open the site again', pg.evaluate("getComputedStyle(document.body).backgroundColor") == 'rgb(1, 2, 3)')
+    OVERRIDE.clear(); ctx.close()
 
     # ---------- 8. keyboard + a11y basics ----------
     ctx = browser.new_context(viewport={'width': 375, 'height': 812}); pg = ctx.new_page()

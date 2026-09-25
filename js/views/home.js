@@ -30,7 +30,7 @@ export function renderHome(ctx) {
       ring(all.length ? done / all.length : 0, `أنجزت ${done} من ${all.length} دروس`),
       h('div', { class: 'grow' },
         h('h2', null, c.title),
-        h('p', { class: 'muted small' }, c.stage, ' · ', h('span', { dir: 'ltr', lang: 'en' }, c.titleEn)),
+        h('p', { class: 'muted small' }, c.stage),
         h('p', null, c.description),
         h('p', { class: 'small strong' }, `${done} من ${all.length} دروس`)));
   });

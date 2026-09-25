@@ -3,7 +3,6 @@ import { normalize } from '../lib/normalize.js';
 
 function fieldsOf(rec, content) {
   const f = [{ label: 'العنوان', text: rec.lesson.title, w: 5 }];
-  if (rec.lesson.titleEn) f.push({ label: 'Title', text: rec.lesson.titleEn, w: 3 });
   f.push({ label: 'الوحدة', text: rec.unit.title, w: 1 });
   if (content) {
     (content.keyPoints || []).forEach((t) => f.push({ label: 'نقطة رئيسية', text: t, w: 2 }));

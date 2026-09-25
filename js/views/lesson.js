@@ -36,7 +36,6 @@ export async function renderLesson(ctx, { params }) {
 
   const head = h('header', null, crumbs,
     h('h1', { class: 'draw' }, lesson.title),
-    lesson.titleEn ? h('p', { class: 'muted' }, h('span', { dir: 'ltr', lang: 'en' }, lesson.titleEn)) : null,
     c && c.draft ? h('p', null, h('span', { class: 'badge' }, 'مسودة'), h('span', { class: 'muted small' }, ' المحتوى قيد مراجعة المدرس')) : null);
 
   const parts = [head];

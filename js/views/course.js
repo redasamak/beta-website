@@ -19,19 +19,17 @@ export function renderCourse(ctx, { params, query }) {
   } else {
     body = h('div', null, ...term.units.map((u) => h('section', { class: 'sheet unit' },
       h('h2', null, u.title),
-      u.titleEn ? h('p', { class: 'muted small' }, h('span', { dir: 'ltr', lang: 'en' }, u.titleEn)) : null,
       h('ol', { class: 'lessons' }, ...u.lessons.map((l, i) => {
         const done = ctx.store.isComplete(l.id);
         return h('li', null, h('a', { class: 'lrow', href: `#/l/${l.id}` },
           h('span', { class: 'num', 'aria-hidden': 'true' }, String(i + 1)),
-          h('span', { class: 'grow' }, h('span', { class: 'lt' }, l.title),
-            l.titleEn ? h('span', { class: 'muted small', dir: 'ltr', lang: 'en' }, l.titleEn) : null),
+          h('span', { class: 'grow' }, h('span', { class: 'lt' }, l.title)),
           done ? stamp('تم ✓') : null));
       })))));
   }
   return { title: course.title, node: h('div', { class: 'view' },
     h('nav', { class: 'crumbs', 'aria-label': 'مسار الصفحة' }, h('a', { href: '#/' }, 'الرئيسية'), ' › ', course.title),
     h('h1', { class: 'draw' }, course.title),
-    h('p', { class: 'muted' }, course.stage, ' · ', h('span', { dir: 'ltr', lang: 'en' }, course.titleEn)),
+    h('p', { class: 'muted' }, course.stage),
     tabs, body) };
 }
