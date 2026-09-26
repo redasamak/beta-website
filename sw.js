@@ -1,6 +1,6 @@
 // Service worker: NETWORK-FIRST for everything (fresh files show up on the next load), cache only as the offline fallback.
 // To ship an update: bump VERSION. Users get a "حدّث دلوقتي" banner instead of a stale app.
-const VERSION = 'basata-v1.0.2';
+const VERSION = 'basata-v1.1.0';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'css/app.css',
   'js/main.js', 'js/router.js', 'js/ui.js', 'js/lib/normalize.js',
